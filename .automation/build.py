@@ -40,6 +40,7 @@ from megalinter.constants import (
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 from webpreview import web_preview
+from security import safe_command
 
 RELEASE = "--release" in sys.argv
 UPDATE_STATS = "--stats" in sys.argv or RELEASE is True
@@ -3253,8 +3254,7 @@ def reformat_markdown_tables():
         format_md_tables_command = ["./format-tables.sh"]
     cwd = os.getcwd() + "/.automation"
     logging.info("Running command: " + str(format_md_tables_command) + f" in cwd {cwd}")
-    process = subprocess.run(
-        format_md_tables_command,
+    process = safe_command.run(subprocess.run, format_md_tables_command,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         universal_newlines=True,
