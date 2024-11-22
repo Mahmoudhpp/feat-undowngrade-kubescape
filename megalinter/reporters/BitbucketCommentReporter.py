@@ -78,7 +78,7 @@ class BitbucketCommentReporter(Reporter):
             pr = requests.get(
                 f"{self.BITBUCKET_API}/repositories/{bitbucket_repo_fullname}/pullrequests/{bitbucket_pr_id}",
                 headers=bitbucket_auth_header,
-            )
+            timeout=60)
             if pr.status_code != 200:
                 pr.raise_for_status()
             pr_state = pr.json().get("state", "")
@@ -108,7 +108,7 @@ class BitbucketCommentReporter(Reporter):
                     f"{self.BITBUCKET_API}/repositories/{bitbucket_repo_fullname}/"
                     f"pullrequests/{bitbucket_pr_id}/comments?pagelen=100",
                     headers=bitbucket_auth_header,
-                )
+                timeout=60)
                 if comments.status_code != 200:
                     pr.raise_for_status()
                 existing_comments = comments.json().get("values", [])
@@ -141,7 +141,7 @@ class BitbucketCommentReporter(Reporter):
                     f"{bitbucket_pr_id}/comments/{comment_id}",
                     headers=bitbucket_auth_header,
                     json=data,
-                )
+                timeout=60)
             else:
                 # New comment
                 requests.post(
@@ -149,7 +149,7 @@ class BitbucketCommentReporter(Reporter):
                     f"{bitbucket_pr_id}/comments",
                     headers=bitbucket_auth_header,
                     json=data,
-                )
+                timeout=60)
                 logging.info(
                     f"[Bitbucket Comment Reporter] PR comment summary added on {bitbucket_repo_fullname} "
                     f"#PR {bitbucket_pr_id}"

@@ -41,7 +41,7 @@ def load_plugin(plugin):
         # Download plugin and write it in megalinter
         try:
             if plugin.startswith("https://"):
-                r = requests.get(plugin, allow_redirects=True).content
+                r = requests.get(plugin, allow_redirects=True, timeout=60).content
             else:
                 # From file://<path>, test both <path> and /tmp/lint/<path>
                 plugin_path = plugin.split("file://")[1]

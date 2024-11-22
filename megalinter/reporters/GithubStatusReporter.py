@@ -80,7 +80,7 @@ class GithubStatusReporter(Reporter):
                 "context": f"--> Lint: {self.master.descriptor_id} with {self.master.linter_name}",
             }
             try:
-                response = requests.post(url, headers=headers, json=data)
+                response = requests.post(url, headers=headers, json=data, timeout=60)
                 if 200 <= response.status_code < 299:
                     logging.debug(
                         f"Successfully posted Github Status for {self.master.descriptor_id} "
