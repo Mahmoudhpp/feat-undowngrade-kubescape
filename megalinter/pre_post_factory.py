@@ -108,8 +108,7 @@ def run_command(command_info, log_key, mega_linter, linter=None):
         command_info["command"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        shell=True,
-        cwd=os.path.realpath(cwd),
+        shell=False, cwd=os.path.realpath(cwd),
         executable=shutil.which("bash") if sys.platform == "win32" else "/bin/bash",
         env=subprocess_env,
     )
