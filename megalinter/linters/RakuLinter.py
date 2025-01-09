@@ -9,6 +9,7 @@ import subprocess
 
 import megalinter
 from megalinter import config
+from security import safe_command
 
 
 class RakuLinter(megalinter.Linter):
@@ -19,8 +20,7 @@ class RakuLinter(megalinter.Linter):
         ):  # META6.json
             pre_command = f"cd {self.workspace} && zef install --deps-only --/test ."
             logging.debug("Raku before_lint_files: " + pre_command)
-            process = subprocess.run(
-                pre_command,
+            process = safe_command.run(subprocess.run, pre_command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 shell=True,
