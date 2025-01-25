@@ -10,6 +10,7 @@ from shutil import copyfile
 
 import commentjson
 from megalinter import Reporter, config, utils
+import defusedxml.minidom
 
 
 class ConfigReporter(Reporter):
@@ -132,7 +133,7 @@ IDE EXTENSIONS APPLICABLE TO YOUR PROJECT
             dom = None
             ext_dep_component = None
             if os.path.isfile(idea_extensions_file):
-                dom = xml.dom.minidom.parse(idea_extensions_file)
+                dom = defusedxml.minidom.parse(idea_extensions_file)
                 for node in dom.documentElement.childNodes:
                     if (
                         node.localName == "component"
