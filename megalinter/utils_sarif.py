@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-import random
 import re
 from json.decoder import JSONDecodeError
 from os import fdopen
@@ -10,6 +9,7 @@ from tempfile import mkstemp
 
 from megalinter import config
 from megalinter.utils_reporter import get_linter_doc_url
+import secrets
 
 
 def normalize_sarif_files(linter):
@@ -153,7 +153,7 @@ def fix_sarif(linter_sarif_obj, linter):
                         for rule_item in rules_updated
                     ):
                         rule["id"] = (
-                            rule["id"] + "_DUPLICATE_" + str(random.randint(1, 99999))
+                            rule["id"] + "_DUPLICATE_" + str(secrets.SystemRandom().randint(1, 99999))
                         )
                     rules_updated += [rule]
                 run["tool"]["driver"]["rules"] = rules_updated
