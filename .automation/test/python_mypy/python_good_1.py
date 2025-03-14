@@ -29,7 +29,7 @@ headers = {
 
 def make_request(query, query_variables):
     payload = {"query": query, "variables": query_variables}
-    response = requests.post(api_url, data=json.dumps(payload), headers=headers)
+    response = requests.post(api_url, data=json.dumps(payload), headers=headers, timeout=60)
     return response
 
 
@@ -120,7 +120,7 @@ def delete_label(label_id):
         query = "".join(query_file.readlines())
 
     payload = {"query": query, "variables": query_variables}
-    result = requests.post(api_url, data=json.dumps(payload), headers=headers).json()
+    result = requests.post(api_url, data=json.dumps(payload), headers=headers, timeout=60).json()
 
     return result
 
