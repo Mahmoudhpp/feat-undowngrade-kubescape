@@ -8,6 +8,7 @@ import sys
 import requests
 import yaml
 from megalinter import config, linter_factory, utils
+from security import safe_command
 
 
 def list_plugins(request_id):
@@ -104,8 +105,7 @@ def process_install(install, request_id):
     # Run install commands
     for command in commands:
         logging.debug("[Plugins] Install command: " + str(command))
-        process = subprocess.run(
-            command,
+        process = safe_command.run(subprocess.run, command,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             shell=True,
