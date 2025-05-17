@@ -23,8 +23,7 @@ class RakuLinter(megalinter.Linter):
                 pre_command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                shell=True,
-                env=config.build_env(
+                shell=False, env=config.build_env(
                     self.request_id, True, self.unsecured_env_variables
                 ),
             )

@@ -3259,8 +3259,7 @@ def reformat_markdown_tables():
         stderr=subprocess.STDOUT,
         universal_newlines=True,
         cwd=cwd,
-        shell=True,
-        executable=None if sys.platform == "win32" else which("bash"),
+        shell=False, executable=None if sys.platform == "win32" else which("bash"),
     )
     stdout = utils.decode_utf8(process.stdout)
     logging.info(f"Format table results: ({process.returncode})\n" + stdout)
@@ -3282,8 +3281,7 @@ def generate_version():
         stdout=subprocess.PIPE,
         universal_newlines=True,
         cwd=cwd_to_use,
-        shell=True,
-    )
+        shell=False)
     print(process.stdout)
     print(process.stderr)
     # Update python project version:
@@ -3291,8 +3289,7 @@ def generate_version():
         ["hatch", "version", RELEASE_TAG],
         stdout=subprocess.PIPE,
         text=True,
-        shell=True,
-        check=False,
+        shell=False, check=False,
     )
     # Update changelog
     if UPDATE_CHANGELOG is True:
