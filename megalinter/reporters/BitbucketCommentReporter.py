@@ -9,6 +9,7 @@ import urllib.parse
 import requests
 from megalinter import Reporter, config
 from megalinter.utils_reporter import build_markdown_summary
+from security import safe_requests
 
 
 class BitbucketCommentReporter(Reporter):
@@ -75,7 +76,7 @@ class BitbucketCommentReporter(Reporter):
 
         # To-Do: Ignore if PR is already merged
         try:
-            pr = requests.get(
+            pr = safe_requests.get(
                 f"{self.BITBUCKET_API}/repositories/{bitbucket_repo_fullname}/pullrequests/{bitbucket_pr_id}",
                 headers=bitbucket_auth_header,
             )
@@ -104,7 +105,7 @@ class BitbucketCommentReporter(Reporter):
             == "true"
         ):
             try:
-                comments = requests.get(
+                comments = safe_requests.get(
                     f"{self.BITBUCKET_API}/repositories/{bitbucket_repo_fullname}/"
                     f"pullrequests/{bitbucket_pr_id}/comments?pagelen=100",
                     headers=bitbucket_auth_header,
