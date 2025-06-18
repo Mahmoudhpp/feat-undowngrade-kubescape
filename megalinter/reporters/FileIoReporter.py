@@ -60,7 +60,7 @@ class FileIoReporter(Reporter):
         try:
             url = "https://file.io/?expires=1d"
             files = {"file": ("mega-linter-report.zip", zf.read())}
-            response = requests.post(url, files=files)
+            response = requests.post(url, files=files, timeout=60)
             if 200 <= response.status_code < 299:
                 json_data = response.json()
                 file_io_url = json_data["link"]

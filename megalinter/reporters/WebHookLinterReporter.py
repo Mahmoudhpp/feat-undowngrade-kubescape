@@ -48,8 +48,8 @@ class WebHookLinterReporter(Reporter):
             )
         try:
             response = requests.post(
-                self.hook_url, headers=headers, json=self.web_hook_data
-            )
+                self.hook_url, headers=headers, json=self.web_hook_data, 
+            timeout=60)
             if 200 <= response.status_code < 299:
                 logging.debug(
                     f"[WebHook Reporter] Successfully posted Web Hook for {self.master.descriptor_id}"
