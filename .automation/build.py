@@ -232,7 +232,7 @@ branding:
         flavor_label = flavor_info["label"]
         comment = f"# MEGALINTER FLAVOR [{flavor}]: {flavor_label}"
         with open(dockerfile, "r+", encoding="utf-8") as f:
-            first_line = f.readline().rstrip()
+            first_line = f.readline(5_000_000).rstrip()
             if first_line.startswith("# syntax="):
                 comment = f"{first_line}\n{comment}"
             else:
