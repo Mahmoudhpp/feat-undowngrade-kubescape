@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 from megalinter import config, utils
+from security import safe_command
 
 
 # User defined commands to run before running linters
@@ -104,8 +105,7 @@ def run_command(command_info, log_key, mega_linter, linter=None):
         [f"{log_key} run: [{command_info['command']}] in cwd [{cwd}]"],
     )
     # Run command
-    process = subprocess.run(
-        command_info["command"],
+    process = safe_command.run(subprocess.run, command_info["command"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         shell=True,
